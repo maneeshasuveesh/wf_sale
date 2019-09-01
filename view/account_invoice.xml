@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+         <record id="view_account_invoice_inherited" model="ir.ui.view">
+            <field name="name">account.invoice.inherited</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_due']" position="after">
+                    <field name="lpo"/>
+                    <field name="number_ar" invisible="1"/>
+                    <field name="date_invoice_ar" invisible="1"/>
+                    <field name="origin_ar" invisible="1"/>
+                    <field name="lpo_ar" invisible="1"/>
+                    <field name="comments_ar" invisible="1"/>
+
+                </xpath>
+            </field>
+         </record>
+    </data>
+</odoo>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+
+        <record id="seq_sale_enquiry" model="ir.sequence">
+            <field name="name">Sales Enquiry</field>
+            <field name="code">sale.enquiry</field>
+            <field name="prefix">ENQ</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+       <record id="seq_letter_of_credit" model="ir.sequence">
+            <field name="name">L/C</field>
+            <field name="code">letter.credit</field>
+            <field name="prefix">LC</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

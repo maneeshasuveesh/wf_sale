@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+         <record id="view_letter_of_credit_form" model="ir.ui.view">
+            <field name="name">letter.credit.form</field>
+            <field name="model">letter.credit</field>
+            <field name="arch" type="xml">
+                <form string="Letter Of Credit" >
+                   <header>
+
+                         <button name="action_confirm" string="Confirm"   states="draft" type="object"  class="btn-primary"/>
+                         <button name="action_cancel" string="Cancel"   states="draft" type="object" />
+                        <field name="state" widget="statusbar" statusbar_visible="draft,ready,done,cancel"/>
+                   </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        <button name="action_view_invoice"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-pencil-square-o"
+                            attrs="{'invisible': [('invoice_count', '=', 0)]}">
+                            <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                        </button>
+                    </div>
+                         <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                        <group>
+                      <group>
+
+                           <field name="origin"/>
+                           <field name="vat"/>
+                           <field name="irc"/>
+                           <field name="tin" />
+                           <field name="erc"/>
+                      </group>
+                            <group>
+                           <field name="date_expiry"/>
+                           <field name="lc_date" required="1"/>
+                           <field name="bank_name"/>
+                           <field name="bank_branch"/>
+                           <field name="bank_address" />
+
+                      </group>
+
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_letter_of_credit_tree">
+            <field name="name">letter.of.credit.view</field>
+            <field name="model">letter.credit</field>
+            <field name="arch" type="xml">
+                <tree string="Letter Of Credit" default_order="create_date desc" >
+                     <field name="name"/>
+                    <field name="origin"/>
+                     <field name="date_expiry"/>
+                    <field name="bank_name"/>
+                    <field name="bank_branch"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_letter_of_credit" model="ir.actions.act_window">
+            <field name="name">Letter Of Credit</field>
+            <field name="res_model">letter.credit</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_letter_of_credit_tree"/>
+
+        </record>
+         <menuitem id="menu_letter_of_credit"  parent="sale.menu_sale_report" name ="L/C Records"
+                    action="action_letter_of_credit" sequence="5"/>
+       <record id="action_view_sale_inv" model="ir.actions.act_window">
+            <field name="name">Invoice Order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="groups_id" eval="[(4,ref('sales_team.group_sale_salesman'))]"/>
+            <!-- TODO: check if we need this -->
+            <field name="binding_model_id" ref="sale.model_sale_order" />
+        </record>
+
+
+
+
+
+    </data>
+</odoo>

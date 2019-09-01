@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_enquiry,sale.enquiry,model_sale_enquiry,sales_team.group_sale_salesman,1,1,1,1
+access_sale_enquiry_line,sale.enquiry.line,model_sale_enquiry_line,sales_team.group_sale_salesman,1,1,1,1
+access_sale_enquiry_manager,sale.enquiry.manager,model_sale_enquiry,wf_sale.group_sale_manager,1,1,1,1
+access_sale_enquiry_line_manager,sale.enquiry.line.manager,model_sale_enquiry_line,wf_sale.group_sale_manager,1,1,1,1
+access_purchase_order_line,purchase.order.line,purchase.model_purchase_order_line,sales_team.group_sale_salesman,1,1,1,1
+access_letter_of_credit_salesman,letter.credit,model_letter_credit,sales_team.group_sale_salesman,1,1,1,1
+access_letter_of_credit_manager,letter.credit.manager,model_letter_credit,sales_team.group_sale_manager,1,1,1,1
+access_sale_invoice_manager,sale.invoice.manager,model_sale_invoice,sales_team.group_sale_manager,1,1,1,1
+access_sale_invoice_salesman,sale.invoice,model_sale_invoice,sales_team.group_sale_salesman,1,1,1,1

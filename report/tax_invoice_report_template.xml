@@ -1,0 +1,361 @@
+<odoo>
+<template id="tax_layout">
+        <div class="header o_clean_header" style="border-bottom: 1px solid #FFFFFF;">
+        </div>
+        <div class="footer">
+        </div>
+        <div class="article">
+            <t t-raw="0"/>
+        </div>
+</template>
+
+<template id="tax_invoice_report_document">
+
+
+        <t t-call="wf_sale.tax_layout">
+            <style>
+                td{
+                border-left: 1px solid black;
+                border-right: 1px solid black;
+                border-bottom: 1px solid black;
+                border-top: 1px solid black;
+                height:57px;
+                }
+                tr{
+                border-left: 1px solid black;
+                border-right: 1px solid black;
+                border-bottom: 1px solid black;
+                border-top: 1px solid black;
+                }
+                tr.tr-new {
+                border-left: 1px solid black;
+                border-right: 1px solid black;
+
+                border-top: 1px solid black;
+                }
+            </style>
+            <div class="page">
+                <table style="width:100%;margin-left:10px;page-break-inside: avoid;">
+                    <tr>
+                        <td colspan="9">
+                            <div>
+                            <div style="display: inline;">
+                               <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-width: 167px;; max-height: 150px; margin-left:20px;"/>
+                            </div>
+                            <div style="display: inline;">
+                               <ul class="list-unstyled"  style="margin-left:380px;">
+                                  <li > فاتورة ضريبية</li>
+                                  <li>Tax Invoice</li>
+                               </ul>
+                            </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="9">
+                            <div style="display: inline;float:left;width:50%;">
+                              <ul class="list-unstyled" >
+                                   <li ><span t-field="o.company_id.name" /></li>
+                                   <li ><span t-field="o.company_id.street" />,<span t-field="o.company_id.state_id.name" /></li>
+                                   <li >Ph:<span t-field="o.company_id.phone" /><t t-if="o.company_id.fax">,Fax:<span t-field="o.company_id.fax" /></t></li>
+                                   <li t-if="o.company_id.email"><span t-field="o.company_id.email" /></li>
+                                   <li t-if="o.company_id.vat">VAT Reg.Number:<span t-field="o.company_id.vat" /></li>
+                              </ul>
+                            </div>
+                            <div style="display: inline;text-align:right;float:left;width:50%;">
+                               <ul class="list-unstyled" style="margin-right:5px;">
+                                    <li ><span t-field="o.company_id.name_ar" /></li>
+                                    <li ><t t-if="o.company_id.street"> <span t-field="o.company_id.street_ar" /></t><t t-if="o.company_id.state_id">,<span t-field="o.company_id.state_ar" /></t></li>
+                                    <li><t t-if="o.company_id.phone"> <span t-field="o.company_id.phone"/> :دبي رقم الهاتف</t><t t-if="o.company_id.fax">  <span t-field="o.company_id.fax" />فاكس:</t></li>
+                                    <li t-if="o.company_id.email"><span t-field="o.company_id.email" /></li>
+                                   <li t-if="o.company_id.vat">رقم التسجيل الضريبي:<span t-field="o.company_id.vat" /></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                             <div style="float:left;width:25%; ">
+                                  <ul class="list-unstyled" >
+                                       <li >Invoice No:</li>
+                                       <li >Invoice Date:</li>
+                                       <li >Sale Order No:</li>
+                                       <li >Customer LPO:</li>
+                                   </ul>
+                             </div>
+                             <div style="float:left;text-align:left;width:25%; ">
+                                 <ul class="list-unstyled" >
+                                       <li ><span t-field="o.number" /></li>
+                                       <li ><span t-field="o.date_invoice" /></li>
+                                       <li ><span t-field="o.origin"/></li>
+                                       <li ><span t-field="o.lpo"/></li>
+                                 </ul>
+                             </div>
+                             <div style="float:left;width:25%; ">
+                                 <ul class="list-unstyled" >
+                                       <li ><span t-field="o.number_ar" /></li>
+                                       <li ><span t-field="o.date_invoice_ar" /></li>
+                                       <li ><span t-field="o.origin_ar"/></li>
+                                       <li ><span t-field="o.lpo_ar"/></li>
+                                 </ul>
+                            </div>
+                            <div style="float:left;width:25%; text-align:right;">
+                                 <ul class="list-unstyled" >
+                                       <li >:رقم الفاتورة</li>
+                                       <li >:  تاريخ الفاتورة</li>
+                                       <li >: رقم أمر المبيعات</li>
+                                       <li >:أمر الشراء المحلي</li>
+                                 </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                             <div style="float:left;width:50%;border-bottom:0px; ">
+                                    <u>Bill To:</u>
+
+                            </div>
+                            <div style="float:left;text-align:right;width:50%; ">
+
+                                   <u>  :فاتورة الى       </u>
+
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border-bottom:none;">
+                         <div style="float:left;width:25%; ">
+                              <ul class="list-unstyled" >
+                                   <li >Customer:</li>
+                                   <li >Address:</li>
+                                   <li >Contact:</li>
+                                   <li >Phone:</li>
+                                   <li >City:</li>
+                                   <li >VAT Reg.Number:</li>
+                               </ul>
+                            </div>
+                            <div style="float:left;text-align:left;width:25%; ">
+                                 <ul class="list-unstyled" >
+                                   <li ><span t-field="o.partner_id.name" /></li>
+                                   <li ><span t-field="o.partner_id.street" />,<span t-field="o.partner_id.street2" /></li>
+                                   <li ><span t-field="o.partner_id.name"/></li>
+                                   <li ><span t-field="o.partner_id.phone"/></li>
+                                   <li ><span t-field="o.partner_id.city"/></li>
+                                   <li ><span t-field="o.partner_id.vat"/></li>
+                                 </ul>
+                            </div>
+                            <div style="float:left;width:25%; ">
+                                  <ul class="list-unstyled" >
+                                   <li ><span t-field="o.partner_id.name" /></li>
+                                   <li ><span t-field="o.partner_id.street" />,<span t-field="o.partner_id.street2" /></li>
+                                   <li ><span t-field="o.partner_id.name"/></li>
+                                   <li ><span t-field="o.partner_id.phone"/></li>
+                                   <li ><span t-field="o.partner_id.city"/></li>
+                                   <li ><span t-field="o.partner_id.vat"/></li>
+                                 </ul>
+                            </div>
+                            <div style="float:left;width:25%; text-align:right;">
+                                 <ul class="list-unstyled" >
+                                       <li >:زبون</li>
+                                       <li >عنوان:</li>
+                                       <li >: اتصل</li>
+                                       <li >: هاتف</li>
+                                       <li >: مدينة</li>
+                                       <li >: رقم التسجيل الضريبي</li>
+                                 </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                             <div style="float:left;width:50%; ">
+                                <ul class="list-unstyled" >
+                                    <strong> <li ><u>Ship To:</u></li></strong>
+                                </ul>
+                             </div>
+                             <div style="float:left;text-align:right;width:50%; ">
+                                 <ul class="list-unstyled" >
+                                   <strong><li><u>  :سافر على متن سفينة ل      </u></li></strong>
+                                 </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                         <div></div>
+                         <div style="float:left;width:25%; ">
+                                  <ul class="list-unstyled" >
+                                       <li >Customer:</li>
+                                       <li >Address:</li>
+                                       <li >Contact:</li>
+                                       <li >Phone:</li>
+                                       <li >City:</li>
+                                       <li >VAT Reg.Number:</li>
+                                   </ul>
+                            </div>
+                            <div style="float:left;text-align:left;width:25%; ">
+                                 <ul class="list-unstyled" >
+                                       <li ><span t-field="o.partner_id.name" /></li>
+                                       <li ><span t-field="o.partner_id.street" />,<span t-field="o.partner_id.street2" /></li>
+                                       <li ><span t-field="o.partner_id.name"/></li>
+                                       <li ><span t-field="o.partner_id.phone"/></li>
+                                       <li ><span t-field="o.partner_id.city"/></li>
+                                       <li ><span t-field="o.partner_id.vat"/></li>
+                                 </ul>
+                            </div>
+                            <div style="float:left;width:25%; ">
+                                  <ul class="list-unstyled" >
+                                       <li ><span t-field="o.partner_id.name" /></li>
+                                       <li ><span t-field="o.partner_id.street" />,<span t-field="o.partner_id.street2" /></li>
+                                       <li ><span t-field="o.partner_id.name"/></li>
+                                       <li ><span t-field="o.partner_id.phone"/></li>
+                                       <li ><span t-field="o.partner_id.city"/></li>
+                                       <li ><span t-field="o.partner_id.vat"/></li>
+                                 </ul>
+                            </div>
+                            <div style="float:left;width:25%; text-align:right;">
+                                  <ul class="list-unstyled" >
+                                       <li >:زبون</li>
+                                       <li >عنوان:</li>
+                                       <li >: اتصل</li>
+                                       <li >: هاتف</li>
+                                       <li >: مدينة</li>
+                                       <li >: رقم التسجيل الضريبي</li>
+                                   </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table style="margin-top:35px;">
+                                <tr>
+                                    <td style="width:10%;">رقم سري<br/>Sr No</td>
+                                    <td style="width:10%;">رمز الصنف<br/>Item Code</td>
+                                    <td style="width:30%;">وصف <br/>Description</td>
+                                    <td style="width:10%;">كمية <br/>Qty</td>
+                                    <td style="width:10%;">سعر الوحده<br/>Unit Price</td>
+                                    <td style="width:10%;">السعر الصافي <br/>Net Price</td>
+                                    <td style="width:10%;">ضريبة القيمة المضافة ٪ <br/>VAT%</td>
+                                    <td style="width:10%;">قيمة الضريبة<br/>VAT Amount</td>
+                                    <td style="width:10%;">كمية الشبكة<br/>Net Amount</td>
+                                </tr>
+                                 <t t-set="sr" t-value="1"/>
+                                 <t t-set="tax" t-value=""/>
+                                 <t t-foreach="o.invoice_line_ids" t-as="line">
+                                 <tr style="page-break-inside: avoid;">
+                                        <td style="text-align:center;"><t t-esc="sr"/> </td>
+                                        <td style="text-align:center;"><t t-esc="line.product_id.name" /> </td>
+                                        <td style="text-align:center;"><t t-esc="line.name"/> </td>
+                                        <td style="text-align:center;"><t t-esc="line.quantity"/> </td>
+
+                                        <td style="text-align:center;"> <t t-esc="line.price_unit" /></td>
+                                        <td style="text-align:center;"> <t t-esc="line.price_subtotal" /> </td>
+                                        <t t-foreach="line.invoice_line_tax_ids" t-as="tax">
+                                            <t t-set="tax" t-value="tax.amount"/>
+                                        </t>
+
+                                        <td style="text-align:center;"> <t t-esc="tax" /> </td>
+                                        <td style="text-align:center;"> <t t-esc="line.price_tax" /> </td>
+                                        <td style="text-align:center;"> <t t-esc="line.price_total" /> </td>
+                                        <t t-set="sr" t-value="sr + 1"/>
+                                 </tr>
+                                 </t>
+                                 <tr>
+                                        <td></td>
+                                        <td style="text-align:center;">Total(<t t-esc="o.currency_id.name"/>)</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td style="text-align:center;"><t t-esc="sum(line.price_subtotal for line in o.invoice_line_ids)"/></td>
+                                        <td></td>
+                                        <td style="text-align:center;"><t t-esc="sum(line.price_tax for line in o.invoice_line_ids)"/></td>
+                                        <td style="text-align:center;"><t t-esc="sum(line.price_total for line in o.invoice_line_ids)"/></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                   <tr>
+                       <td>
+                           <div style="page-break-inside: avoid;">
+                               <hr></hr>
+                               <div>
+                               <span t-esc="o.currency_id.amount_to_text(sum(line.price_total for line in o.invoice_line_ids))"/> Only
+                               </div>
+                               <div>
+                                   <div>
+                                       <t t-if="o.comment">
+                                       <ul class="list-unstyled" >
+                                          <strong> <li ><u>Terms And Conditions:</u></li></strong>
+                                          <t t-foreach="o.get_comments()" t-as="comment">
+                                          <li><t t-esc="comment" /></li>
+                                          </t>
+                                       </ul>
+                                       </t>
+                                   </div>
+                                   <div style="text-align:right;">
+                                         <ul class="list-unstyled" >
+                                             <li></li>
+                                             <t t-foreach="o.get_comments_ar()" t-as="comment_ar">
+                                              <li><t t-esc="comment_ar" /></li>
+                                          </t>
+                                         </ul>
+                                   </div>
+                               </div>
+                               <div>
+                                   <t t-if="o.partner_bank_id">
+                                   Bank Details : <span t-esc="o.partner_bank_id.name"/>
+                                   </t>
+                               </div>
+                               <div style="margin-top:200px;">
+                               <div>
+                                    <div style="float:left;width:50%;">
+                                  <ul class="list-unstyled" >
+                                      <li></li>
+                                      <li></li>
+                                      <li >     إلى عن على
+                                       <t t-esc="o.company_id.name_ar"/></li>
+                                      <li >For <t t-esc="o.company_id.name"/></li>
+                                </ul>
+                                </div>
+                                <div style="float:left;width:50%;text-align:right;">
+                                     <ul class="list-unstyled" >
+                                        <li></li>
+                                         <li></li>
+                                          <li >ختم علامة العميل</li>
+                                         <li >Customer's Sign Seal</li>
+                                     </ul>
+                                </div>
+                               </div>
+                                   <div style="text-align:center;">
+                                        <ul class="list-unstyled" >
+
+                                         <li>هذه وثيقة أنتجت من النظام الآلي وختم وتوقيع الشركة غير مطلوب</li>
+                                         <li >This is system generated document company's stamp and signature is not required</li>
+                                     </ul>
+                                   </div>
+                               </div>
+                        </div>
+
+                       </td>
+
+                   </tr>
+                </table>
+            </div>
+
+        </t>
+
+    </template>
+    <template id="tax_invoice_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="wf_sale.tax_invoice_report_document"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>
+
+
+
+
+

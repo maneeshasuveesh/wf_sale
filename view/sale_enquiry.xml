@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+   <record id="view_enquiry_form" model="ir.ui.view">
+            <field name="name">sale.enquiry.form</field>
+            <field name="model">sale.enquiry</field>
+            <field name="arch" type="xml">
+                <form string="Sale Enquiry" class="o_sale_order">
+                <header>
+
+                    <button name="action_approve_all_prices" string="Approve All Prices"  attrs ="{'invisible':[('all_approved','=',True),]}" states="draft" type="object"  class="btn-primary"/>
+                    <button name="action_send_for_clarification" type="object" string="Send For Clarification"  class="btn-primary" attrs="{'invisible': ['|', ('state', '!=', 'draft')]}" />
+                    <button name="action_approve" attrs="{'invisible':['|',('state','in',('quotation')),('is_manager','=',False)]}" states="draft,sent_for_approval" string="Approve"   type="object"  class="btn-primary" groups="sales_team.group_sale_manager"/>
+                    <button name="action_create_quotation"
+                        string="Create Quotation" type="object" class="btn-primary"
+
+                         states="draft,approved" context="{'open_quotation': True}"/>
+
+                    <button name="action_cancel" states="draft,approved,sent" type="object" string="Cancel"/>
+
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,approved,quotation" force_save="1"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_order"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-pencil-square-o"
+                            attrs="{'invisible': [('order_count', '=', 0)]}">
+                            <field name="order_count" widget="statinfo" string="Quotations"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" widget="res_partner_many2one" domain="[('customer','=',True)]" context="{'search_default_customer':1, 'show_address': 1, 'show_vat': True}" options='{"always_reload": True}'/>
+                        </group>
+                        <group>
+                            <field name="date_enquiry" />
+                            <field name="is_manager"  invisible="1"/>
+                            <field name="all_approved"  invisible="1"/>
+                            <field name="partially_approved"  invisible="1"/>
+
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Enquiry Lines" name="enquiry_lines">
+                            <field name="enquiry_line"
+                                widget="section_and_note_one2many">
+                                <tree string="Sales Enquiry Lines" editable="bottom">
+                                    <field name="product_id" force_save="1"/>
+                                    <field name="enquiry_id" invisible="1"/>
+                                    <field name="product_uom_qty" string="Enquired Qty"/>
+                                    <field name="product_uom" force_save="1" groups="uom.group_uom" options='{"no_open": True}'/>
+                                    <field name="price_unit"/>
+                                    <field name="state" readonly="1"/>
+                                    <field name="approved" invisible="1"/>
+                                    <field name="sale_line_id" invisible="1"/>
+                                    <button name="action_approve" attrs="{'invisible':['|',('approved','=',True),('state','=','available')]}" string="Approve" type="object" states="draft" class="btn-primary"/>
+                                </tree>
+
+                            </field>
+
+                        </page>
+                    </notebook>
+                </sheet>
+
+                </form>
+            </field>
+        </record>
+         <record model="ir.ui.view" id="view_sale_enquiry_tree">
+            <field name="name">sale.enquiry.tree.view</field>
+            <field name="model">sale.enquiry</field>
+            <field name="arch" type="xml">
+                <tree string="Sales Enquiry" default_order="date_enquiry desc" delete="false" >
+                    <field name="name"/>
+                    <field name="date_enquiry"/>
+                    <field name="partner_id"/>
+                    <field name="state"/>
+
+                </tree>
+            </field>
+        </record>
+  <record id="action_view_enquiries" model="ir.actions.act_window">
+            <field name="name">Sales Enquiry</field>
+            <field name="res_model">sale.enquiry</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_sale_enquiry_tree"/>
+
+        </record>
+          <menuitem id="menu_sale_enquiry"
+            name="Enquiries"
+            parent="sale.sale_order_menu"
+groups="sales_team.group_sale_salesman"
+            action="action_view_enquiries"
+            sequence="0"/>
+    </data>
+
+
+</odoo>
